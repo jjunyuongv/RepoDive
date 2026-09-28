@@ -47,7 +47,7 @@ def _fetch_and_analyze(owner: str, repo: str) -> tuple[dict[str, str] | None, li
 
     **소스를 함께 돌려주는 이유**: 색인도 같은 tarball 이 필요하다. 버리면 새 스냅샷당
     두 번 받게 되는데, 아카이브 다운로드는 core 와 **별개 제한**을 받아 공짜가 아니다
-    (TROUBLESHOOTING 참고). `_start_indexing` 이 이것을 큐로 넘긴다.
+    `_start_indexing` 이 이것을 큐로 넘긴다.
 
     여기서 받는 이유는 **요약이 코드베이스의 상태를 말하려면 요약 생성 전에 결과가
     있어야 하기 때문**이다. 캐시 히트에는 아예 부르지 않으므로 0회다.

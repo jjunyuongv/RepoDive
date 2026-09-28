@@ -145,7 +145,7 @@ def my_repos(request: Request):
 
     **`/auth` 아래에 둔다.** 새 최상위 경로를 만들면 `Front/vite.config.ts` 의
     `BACKEND_PATHS` 와 `Front/nginx.conf` 를 둘 다 고쳐야 하고, 갈리면 배포에서 404 가
-    SPA 폴백에 먹혀 200 으로 보인다(`docs/log/11-login.md`).
+    SPA 폴백에 먹혀 200 으로 보인다.
 
     401 을 쓴다 — 여기는 "남의 것"(`/chat` 의 404)이 아니라 "로그인 안 함"이다.
     """

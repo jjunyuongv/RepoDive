@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
  *
  * 백엔드 `/analyze` 는 단일 POST 라 진행 상황을 알려주지 않는다. 그래서 이 표시는
  * 서버의 실제 진행이 아니라 **경과 시간으로 추정한 값**이다. 전환 시점의 근거는
- * plan.md 실측 — check_repo_access 는 GitHub 1회, fetch_repo_context 는 3~6회이고,
+ * 실측 — check_repo_access 는 GitHub 1회, fetch_repo_context 는 3~6회이고,
  * 그 뒤 남는 시간은 전부 LLM 호출이다.
  */
 const STAGES = [

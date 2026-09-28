@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 # 큰 Python/JS 저장소에서 한국어 Recall@8 이 0.80 → 0.60 으로 무너졌다.
 # 정답이 더 큰 덩어리에 섞여 초점이 흐려지는 것으로, 클래스를 통째로 한 청크로 두지
 # 않는 것과 같은 이유다. 넓은 문맥이 유리한 것은 식별자 질의뿐이었다.
-# (어느 저장소에서 잰 수치인지는 plan.md 의 Stage 3.7 에 있다)
+# (측정은 docs/evaluation.md §4)
 #
 # 이 값이 임베딩 한도(512토큰)를 **보장하지는 않는다.** 문자/토큰 비율이 실측에서
 # 1.68 ~ 17.40 까지 10배 벌어져서(한국어 주석 덩어리 vs 압축된 코드), 800자로도
@@ -189,7 +189,7 @@ def _node_chunks(node, source: bytes, path: str, language: str, definitions: set
     # 노이즈로 보고 버렸는데, 그러면 `public class X extends SomeBase` 처럼 짧은 선언이
     # 인덱스에서 통째로 사라진다 — "무엇을 상속하는가"를 묻는 질의는 순위가 낮았던 게
     # 아니라 **정답 자체가 없었다.** 클래스가 무엇을 상속하는지는 그 파일에서 그 한 줄에만 있다.
-    # (측정: plan.md 의 Stage 3.7 STEP 2a)
+    # (측정: docs/evaluation.md §4 청킹 수정 2a)
     # 작은 헤더는 _merge_small() 이 뒤따르는 첫 메서드에 붙인다.
     header_end = inner[0].start_byte
     header = source[node.start_byte:header_end].decode("utf-8", errors="replace")

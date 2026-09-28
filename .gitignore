@@ -24,3 +24,15 @@ Back/cache/
 
 # 개인 확인용 요약 페이지
 프로젝트-요약.html
+
+# 깃에서 뺀 개발 기록. 로컬 참고용으로만 남긴다 (2026-09-29 정리)
+docs/log/
+plan.md
+STATUS.md
+플로우.md
+TROUBLESHOOTING.md
+트러블슈팅.md
+CLAUDE.md
+docs/img/03-landing-blocked.png
+docs/img/04-analyzing.png
+docs/img/05-indexing-partial.png

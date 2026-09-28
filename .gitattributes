@@ -22,13 +22,5 @@
 #  빈 `__init__.py` 와 한 줄짜리 `favicon.svg` 가 그렇게 잡힌다)
 *.png  -text
 
-# ── 예외: 워킹트리가 CRLF 인 문서 ───────────────────────────────
-plan.md         text eol=crlf
-CLAUDE.md       text eol=crlf
-docs/log/*.md   text eol=crlf
-
 # 워킹트리가 LF 인 문서 (이 파일 자신도 LF 다)
 .gitattributes  text eol=lf
-TROUBLESHOOTING.md  text eol=lf
-트러블슈팅.md  text eol=lf
-플로우.md  text eol=lf

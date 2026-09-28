@@ -2,7 +2,7 @@
 
     python scripts/aggregate_runs.py
 
-출력 순서는 `STATUS.md` §5 의 항목 순서와 같다. 표본이 쌓이면 다시 돌려 그 절을 갱신한다.
+프로덕션 기준선(질문당 실비·왕복 수·접두사 크기)을 항목별로 출력한다. 표본이 쌓이면 다시 돌린다.
 
 **DB 만 본다. `logs/runs.jsonl` 은 읽지 않는다.** 그 파일 31행은 `migrate_runs_to_db.py`
 로 이미 전부 `runs` 에 이관돼 있어(ts 대조 31/31), 합산하면 **이중계상**이다.
@@ -21,7 +21,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from app.config import DAILY_LLM_CALL_LIMIT, DAILY_TOKEN_LIMIT  # noqa: E402
 from app.db import pool  # noqa: E402
 
-# ── FULL_INJECTION_MAX_TOKENS 역산 (docs/log/04-tasks-1-2.md:120-133) ──
+# ── FULL_INJECTION_MAX_TOKENS 역산 ──
 #
 #   S_max = (3·C_rag/p_in + snip) / w̄  ,  w̄ = Σ(1.25 + 0.1(N−1)) / ΣN
 #
@@ -122,7 +122,7 @@ def prefix_sizes() -> None:
     print("  평균을 쓰지 않는다 — 저장소마다 자릿수가 다르고, 같은 저장소도 재색인으로 변한다.")
     # **접두사는 cache_write_tokens 로 읽는다. cache_read_tokens 는 접두사가 아니다.**
     # 한 행은 질문 하나이고 그 안에 API 호출이 (round_trips + 1) 번 있는데, run_log 가
-    # 토큰을 **합산해** 한 줄로 남긴다(STATUS §2.4). 그래서 읽기는 접두사 × 읽은 호출 수다.
+    # 토큰을 **합산해** 한 줄로 남긴다. 그래서 읽기는 접두사 × 읽은 호출 수다.
     # 쓰기는 캐시를 만들 때 한 번뿐이라 합산돼도 접두사 그대로다.
     for row in _rows(
         """SELECT repo, cache_write_tokens AS prefix, min(ts)::date AS first, count(*) AS n

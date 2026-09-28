@@ -60,7 +60,7 @@ CHUNK_TABLE = os.environ.get("CHUNK_TABLE", "code_chunks")
 # 소스는 tarball 한 번으로 통째로 받으므로 GitHub 요청 수가 아니라 크기가 비용이다.
 #
 # 80MB 로 시작했다가 500MB 로 올렸다 — 3D 에셋이 든 저장소가 여기 걸려
-# 코드 검색이 통째로 막혀 있었다(경위는 plan.md 의 Stage 3.6).
+# 코드 검색이 통째로 막혀 있었다.
 # tarball 은 이미지·모델 파일까지 포함하는데
 # 우리가 뽑아 쓰는 건 소스뿐이라, 아카이브 크기는 실제 인덱싱 부담과 비례하지 않는다.
 # (받는 쪽은 SpooledTemporaryFile 이라 큰 파일은 디스크로 넘어간다)
@@ -97,7 +97,7 @@ MAX_STORED_SOURCE_BYTES = int(
 # **w̄ 가 이 값을 지배한다.** 실측 세션은 질문 2~6회(평균 3.25)로 짧아서 쓰기 1.25배가
 # 잘 나눠지지 않는다. 세션이 길어지면 w̄ 가 떨어져 임계값이 올라간다
 # (질문이 전부 6회면 w̄ 0.29 → 약 88,000). 표본이 4세션뿐이므로 실사용 기록이 쌓이면
-# 다시 뽑을 것. 산식과 측정은 plan.md 의 '작은 저장소 RAG 우회'.
+# 다시 뽑을 것. 산식과 측정은 docs/architecture.md §3 과 docs/evaluation.md §5.
 FULL_INJECTION_MAX_TOKENS = int(os.environ.get("FULL_INJECTION_MAX_TOKENS", "57000"))
 
 # 사전 게이트. tarball 을 풀기 전에 소스 바이트 합만 보고 명백히 큰 저장소를 걸러낸다.
@@ -146,8 +146,8 @@ TRUST_PROXY_HEADERS = os.environ.get("TRUST_PROXY_HEADERS", "0") == "1"
 # 그대로 넣는다.
 #
 # **문자열 그대로 둔다. 여기서 파싱하지 않는다.** 두 가지 이유다 —
-# tests/test_status_doc.py 가 이 파일을 **AST 로** 읽어 os.environ.get 의 기본값을
-# 문서와 대조하는데, frozenset(...) 으로 가공하면 대조할 리터럴이 사라진다.
+# tests/test_config.py 가 이 파일의 os.environ.get 호출을 그대로 읽어 .env.example 과
+# 대조하는데, frozenset(...) 으로 가공하면 대조할 리터럴이 사라진다.
 # 그리고 목록 해석(공백·대소문자·빈 항목)은 비즈니스 규칙이라 services/ 의 몫이다.
 # 파싱과 판정은 app/services/allowlist.py 에 있다.
 ALLOWED_REPOS = os.environ.get("ALLOWED_REPOS", "")
@@ -159,8 +159,8 @@ ALLOWED_REPOS = os.environ.get("ALLOWED_REPOS", "")
 # 도입 전과 **완전히 같아야 하고**, 그것을 `tests/test_auth_api.py` 가 고정한다.
 #
 # 배포는 지금 이 값을 비워 둔다 — OAuth App 의 콜백 URL 은 호스트가 정확히 일치해야
-# 하는데 인스턴스를 껐다 켤 때마다 퍼블릭 IP 가 바뀐다(docs/log/09-deploy.md 재기동
-# 절차 1번). 도메인이 생긴 뒤에 켠다.
+# 하는데 인스턴스를 껐다 켤 때마다 퍼블릭 IP 가 바뀐다.
+# 도메인이 생긴 뒤에 켠다.
 GITHUB_OAUTH_CLIENT_ID = os.environ.get("GITHUB_OAUTH_CLIENT_ID", "")
 GITHUB_OAUTH_CLIENT_SECRET = os.environ.get("GITHUB_OAUTH_CLIENT_SECRET", "")
 
@@ -173,7 +173,7 @@ LOGIN_SESSION_DAYS = int(os.environ.get("LOGIN_SESSION_DAYS", "14"))
 # **`DAILY_LLM_CALL_LIMIT`(서비스 전체)을 대체하지 않는다.** 그쪽은 비용 천장이고
 # 이쪽은 공평성 장치다 — 한 사람이 천장을 혼자 다 쓰는 것을 막는다. 그래서 값도
 # 그쪽에서 역산한다: 서비스 상한 500 을 **최소 5명이 나눠 쓸 수 있어야 한다**로 잡아 100.
-# 실사용은 하루 최대 8건이라(STATUS §5.1) 여기 닿는 사람은 아직 없다.
+# 실사용은 하루 최대 8건이라 여기 닿는 사람은 아직 없다.
 USER_DAILY_LIMIT = int(os.environ.get("USER_DAILY_LIMIT", "100"))
 
 # 로그인 쿠키에 `Secure` 를 붙일지. **비우면 `FRONTEND_ORIGIN` 이 https 인지로 정한다.**

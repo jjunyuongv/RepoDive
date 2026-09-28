@@ -40,7 +40,7 @@
 # 밖에서 오는 길이 없다. 관리자 페이지는 `docker compose exec backend ...` 나 같은
 # 네트워크의 다른 컨테이너에서 `backend:8000/admin` 으로 연다. **SSH 터널만으로는
 # 안 닿는다** — backend 는 호스트로 포트를 열지 않기 때문이다(아래 주석 참조).
-# (경위는 Front/nginx.conf 와 docs/log/09-deploy.md 5단계)
+# (경위는 Front/nginx.conf)
 
 services:
   db:
@@ -85,7 +85,7 @@ services:
       DATABASE_URL: postgresql://${POSTGRES_USER:-repodive}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-repodive}
       # **nginx 뒤에 있으므로 1 이다.** 안 켜면 백엔드가 보는 클라이언트가 전부
       # nginx 컨테이너 IP 하나여서 IP 상한이 사용자별이 아니라 전체 공유가 된다.
-      # (짝이 되는 X-Forwarded-For 덮어쓰기는 Front/nginx.conf 에 있다 — STATUS §2.1)
+      # (짝이 되는 X-Forwarded-For 덮어쓰기는 Front/nginx.conf 에 있다)
       TRUST_PROXY_HEADERS: "1"
       # 같은 출처라 CORS 요청이 안 생기지만, 도메인이 갈리는 날 이 값이 유일한 허용 목록이다.
       FRONTEND_ORIGIN: ${PUBLIC_ORIGIN:-http://localhost}
@@ -118,7 +118,7 @@ services:
       # **`/` 가 아니라 `/health` 다 — 프록시되는 경로여야 한다.** `/` 는 정적 파일이라
       # 백엔드가 죽어도 200 이 나가서 아무것도 못 잡는다. nginx.conf 가 요청 시점에
       # 이름을 푸는 방식(resolver + 변수)으로 바뀌면서 **업스트림 이름 오타가 기동에서
-      # 안 걸리게 됐는데**(docs/log/09-deploy.md 3단계 검증 3), 이 healthcheck 가
+      # 안 걸리게 됐는데**, 이 healthcheck 가
       # compose 단계에서 그것을 다시 잡는다.
       #
       # 호스트는 localhost 가 아니라 **127.0.0.1** 이다. nginx 는 `listen 80`(IPv4)

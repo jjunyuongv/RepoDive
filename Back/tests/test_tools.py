@@ -173,7 +173,7 @@ def test_build_gives_every_tool_when_sources_are_stored(fake):
 def test_build_drops_read_file_and_grep_without_sources(monkeypatch, fake):
     """**빈손 도구를 주면 모델이 "없다"를 "저장소에 없다"로 읽는다.**
 
-    STATUS.md §2.2 의 계약("저장소에 없다"와 "수집 범위에 없다"는 다른 말)이 정확히
+    docs/architecture.md §2 의 계약("저장소에 없다"와 "수집 범위에 없다"는 다른 말)이 정확히
     거기서 깨진다. 그리고 이 경로는 측정된 적이 없다 — 판정은 도구 셋이 다 도는
     스냅샷에서 나왔다.
     """
